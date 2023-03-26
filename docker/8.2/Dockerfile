@@ -53,8 +53,12 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
-RUN echo "alias a='php artisan' " > /home/sail/.bash_aliases
-RUN echo "alias a='php artisan' " > /root/.bash_aliases
+RUN apt-get update && apt-get install -y nano
+
+RUN echo "alias a='php artisan'\n \
+alias pest='./vendor/bin/pest' " > /home/sail/.bash_aliases
+
+RUN echo "alias a='php artisan'" > /root/.bash_aliases
 
 EXPOSE 8000
 
