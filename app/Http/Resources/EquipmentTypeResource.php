@@ -17,7 +17,7 @@ class EquipmentTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'sn_number' => $this->sn_number,
+            'sn_number' => $this->sn_mask,
         ];
     }
 }

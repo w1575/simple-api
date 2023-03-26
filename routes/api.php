@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\EquipmentTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::get('/api/equipment', [EquipmentController::class, 'index'])->name('list');
-Route::get('/api/equipment/{id}', [EquipmentController::class, 'show'])->name('view');
-Route::post('/api/equipment', [EquipmentController::class, 'store'])->name('store');
-Route::delete('/api/equipment/{id}', [EquipmentController::class, 'index'])->name('delete');
+Route::get('/equipment', [EquipmentController::class, 'index'])->name('list');
+Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('view');
+Route::post('/equipment', [EquipmentController::class, 'store'])->name('store');
+Route::delete('/equipment/{id}', [EquipmentController::class, 'destroy'])->name('delete');
+
+Route::get('/equipment-type', [EquipmentTypeController::class, 'index'])->name('types-list');

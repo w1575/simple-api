@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Actions\Equipment\IndexAction;
-use App\Contracts\Api\Equipment\IndexContractInterface;
+use App\Actions\EquipmentType\IndexAction;
+use App\Contracts\Api\EquipmentType\IndexContractInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ActionServiceProvider extends ServiceProvider
