@@ -2,15 +2,21 @@
 
 namespace App\Providers;
 
-use App\Actions\EquipmentType\IndexAction;
-use App\Contracts\Api\EquipmentType\IndexContractInterface;
+use App\Actions\Equipment\StoreAction;
+use App\Actions\EquipmentType\IndexAction as EquipmentTypeIndex;
+use App\Contracts\Api\Equipment\IndexContractInterface;
+use App\Contracts\Api\Equipment\StoreContractInterface;
+use App\Contracts\Api\EquipmentType\IndexContractInterface as EquipmentTypeIndexContractInterface;
+use App\Actions\Equipment\IndexAction as EquipmentIndexAction;
 use Illuminate\Support\ServiceProvider;
 
 class ActionServiceProvider extends ServiceProvider
 {
 
     public array $bindings = [
-        IndexContractInterface::class => IndexAction::class,
+        EquipmentTypeIndexContractInterface::class => EquipmentTypeIndex::class,
+        IndexContractInterface::class => EquipmentIndexAction::class,
+        StoreContractInterface::class => StoreAction::class,
     ];
 
     /**

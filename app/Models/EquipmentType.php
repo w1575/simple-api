@@ -34,4 +34,50 @@ use Illuminate\Support\Carbon;
 class EquipmentType extends Model
 {
     use HasFactory, FilterableTrait;
+
+    public function generateSN(): string
+    {
+        $randomSymbol = function() {
+            $items = ['-', '_', '@'];
+            return $items[array_rand($items)];
+        };
+
+        $randomLetter = fn(string $first, string $last) => array_rand(range($first, $last));
+
+        $generateValue = fn(string $value) => match ($value) {
+            'N' => rand(0, 9),
+            'A' => $randomLetter('A', 'Z'),
+            'a' => $randomLetter('a', 'z'),
+            'X' => match(rand(0, 2)) {
+                0 => rand(0, 9),
+                1 => $randomLetter('a', 'z'),
+                2 => $randomLetter('A', 'Z'),
+            },
+            'Z' => $randomSymbol(),
+        };
+
+        $result = "";
+
+        foreach (mb_str_split($this->sn_mask) as $letter) {
+            $result .= $generateValue($letter);
+        }
+
+        return $result;
+    }
+
+    public function getSNMaskRegx(): string
+    {
+        $result = "^";
+        foreach (mb_str_split($this->sn_mask) as $letter) {
+            $result .= match ($letter) {
+                'N' => "[0-9]",
+                'A' => "[A-Z]",
+                'a' => '[a-z]',
+                'X' => "([0,9]|[A-Z])",
+                'Z' => "[\-,\_\@]",
+            };
+        }
+
+        return $result. "$";
+    }
 }

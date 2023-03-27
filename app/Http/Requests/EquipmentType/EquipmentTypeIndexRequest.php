@@ -5,7 +5,7 @@ namespace App\Http\Requests\EquipmentType;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EquipmentIndexRequest extends FormRequest
+class EquipmentTypeIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -11,3 +11,4 @@ echo $SAIL
 $SAIL up -d
 
 $SAIL artisan migrate
+$SAIL artisan test

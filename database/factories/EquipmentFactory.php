@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Equipment;
+use App\Models\EquipmentType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Equipment>
+ * @extends Factory<Equipment>
  */
 class EquipmentFactory extends Factory
 {
@@ -16,8 +18,12 @@ class EquipmentFactory extends Factory
      */
     public function definition(): array
     {
+        $type = EquipmentType::firstOrFail();
+
         return [
-            //
+            'equipment_type_id' => $type->id,
+            'serial_number' => $type->generateSN(),
+            'comment' => $this->faker->text(64),
         ];
     }
 }

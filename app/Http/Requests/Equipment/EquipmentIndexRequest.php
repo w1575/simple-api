@@ -2,13 +2,10 @@
 
 namespace App\Http\Requests\Equipment;
 
-use App\Models\EquipmentType;
-use App\Rules\SNMaskRule;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Exists;
 
-class StoreEquipmentRequest extends FormRequest
+class EquipmentIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +23,9 @@ class StoreEquipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'items.*.equipment_type_id' =>  [Exists::class, (new EquipmentType)->getTable()],
-            'items.*.serial_number' => [(new SNMaskRule($this->input('equipment_type_id')))],
-            'items.*.comment' => ['max:255'],
+            'equipment_type_id' => ['min:3'],
+            'serial_number' => ['min:3'],
+            'comment' => ['min:3'],
         ];
     }
 }
