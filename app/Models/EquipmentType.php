@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Components\Eloquent\QueryFilter\FilterableTrait;
+use App\Filters\EquipmentTypeFilterInterface;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,9 +28,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|EquipmentType whereSnMask($value)
  * @method static Builder|EquipmentType whereType($value)
  * @method static Builder|EquipmentType whereUpdatedAt($value)
+ * @method static Builder filter(EquipmentTypeFilterInterface $filters)
  * @mixin Eloquent
  */
 class EquipmentType extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterableTrait;
 }

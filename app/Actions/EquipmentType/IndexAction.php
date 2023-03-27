@@ -4,18 +4,16 @@ namespace App\Actions\EquipmentType;
 
 use App\Contracts\Api\EquipmentType\IndexContractInterface;
 use App\Data\EquipmentType\IndexData;
+use App\Filters\EquipmentTypeFilterInterface;
 use App\Http\Resources\EquipmentTypeCollection;
 use App\Models\EquipmentType;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class IndexAction implements IndexContractInterface
 {
-
-    public function __invoke(IndexData $data): EquipmentTypeCollection
+    public function __invoke(IndexData $data, EquipmentTypeFilterInterface $filters): JsonResource
     {
-        $equipmentTypes = QueryBuilder::for(EquipmentType::query())
-            ->allowedFilters('type', 'sn_mask')
-        ;
+        $equipmentTypes = EquipmentType::query()->filter($filters);
 
         return new EquipmentTypeCollection($equipmentTypes->paginate());
     }
