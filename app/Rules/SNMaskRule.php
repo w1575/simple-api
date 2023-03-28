@@ -10,11 +10,11 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 class SNMaskRule implements ValidationRule
 {
 
-    private string $regex;
+    protected string $regex;
 
     public function __construct(int $typeId)
     {
-        $this->regex = EquipmentType::whereId($typeId)->getSNMaskRegx();
+        $this->regex = EquipmentType::whereId($typeId)->firstOrFail()->getSNMaskRegx();
     }
 
     /**

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Api\Equipment\StoreContractInterface;
+use App\Data\Equipment\StoreData;
 use App\Http\Requests\Equipment\StoreEquipmentRequest;
 use App\Http\Requests\Equipment\UpdateEquipmentRequest;
 use App\Models\Equipment;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class EquipmentController extends Controller
 {
@@ -13,7 +17,7 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -21,15 +25,17 @@ class EquipmentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEquipmentRequest $request)
+    public function store(StoreEquipmentRequest $request): JsonResponse
     {
-        //
+        $command = app(StoreContractInterface::class);
+        $data = StoreData::from($request->toArray());
+        return $command($data);
     }
 
     /**

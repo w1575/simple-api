@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Traits\Timestamp;
 use Database\Factories\EquipmentFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\InteractsWithTime;
 
 /**
  * App\Models\Equipment
@@ -33,9 +35,17 @@ use Illuminate\Support\Carbon;
  */
 class Equipment extends Model
 {
-    use HasFactory;
+    use HasFactory, InteractsWithTime;
 
-    public function equipment(): BelongsTo
+    protected $guarded = [
+        'created_at',
+        'updated_at',
+        'id',
+    ];
+
+    protected $table = "equipments";
+
+    public function equipmentType(): BelongsTo
     {
         return $this->belongsTo(EquipmentType::class);
     }
