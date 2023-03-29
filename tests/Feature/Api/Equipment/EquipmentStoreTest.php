@@ -26,3 +26,5 @@ it('cant store data with wrong sn_number in database', function (array $definiti
     $response->assertJsonCount(1, 'items');
     $response->assertJsonMissing(['id' => 1]);
 })->with('equipment_store_wrong_mask_dataset');
+
+

@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Components\Eloquent\QueryFilter\FilterableTrait;
+use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
 use App\Filters\EquipmentTypeFilterInterface;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use ReflectionClass;
 
 /**
  * App\Models\EquipmentType
@@ -45,15 +47,15 @@ class EquipmentType extends Model
         $randomLetter = fn(string $first, string $last) => array_rand(range($first, $last));
 
         $generateValue = fn(string $value) => match ($value) {
-            'N' => rand(0, 9),
-            'A' => $randomLetter('A', 'Z'),
-            'a' => $randomLetter('a', 'z'),
-            'X' => match(rand(0, 2)) {
+            EquipmentTypeMaskInterface::MASK_DIGIT => rand(0, 9),
+            EquipmentTypeMaskInterface::MASK_UPPERCASE_LETTER => $randomLetter('A', 'Z'),
+            EquipmentTypeMaskInterface::MASK_LOWERCASE_LETTER => $randomLetter('a', 'z'),
+            EquipmentTypeMaskInterface::MASK_DIGIT_OR_LETTER => match(rand(0, 2)) {
                 0 => rand(0, 9),
                 1 => $randomLetter('a', 'z'),
                 2 => $randomLetter('A', 'Z'),
             },
-            'Z' => $randomSymbol(),
+            EquipmentTypeMaskInterface::MASK_SPECIAL_SYMBOL => $randomSymbol(),
         };
 
         $result = "";
@@ -65,19 +67,35 @@ class EquipmentType extends Model
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function getSNMaskRegx(): string
     {
         $result = "^";
         foreach (mb_str_split($this->sn_mask) as $letter) {
             $result .= match ($letter) {
-                'N' => "[0-9]",
-                'A' => "[A-Z]",
-                'a' => '[a-z]',
-                'X' => "([0,9]|[A-Z])",
-                'Z' => "[\-,\_\@]",
+                EquipmentTypeMaskInterface::MASK_DIGIT => "[0-9]",
+                EquipmentTypeMaskInterface::MASK_UPPERCASE_LETTER => "[A-Z]",
+                EquipmentTypeMaskInterface::MASK_LOWERCASE_LETTER => '[a-z]',
+                EquipmentTypeMaskInterface::MASK_DIGIT_OR_LETTER => "([0,9]|[A-Z])",
+                EquipmentTypeMaskInterface::MASK_SPECIAL_SYMBOL => "[\-,\_\@]",
             };
         }
 
         return $result. "$";
+    }
+
+    /**
+     * @return void
+     */
+    public static function generateRandomSNForGivenMask(string $mask): string
+    {
+
+    }
+
+    public static function getMaskAvailableValues(): array
+    {
+        return (new ReflectionClass(static::class))->getConstants();
     }
 }
