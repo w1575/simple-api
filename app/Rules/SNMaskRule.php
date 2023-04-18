@@ -12,9 +12,9 @@ class SNMaskRule implements ValidationRule
 
     protected string $regex;
 
-    public function __construct(int $typeId)
+    public function __construct(int $typeId, )
     {
-        $this->regex = EquipmentType::whereId($typeId)->firstOrFail()->getSNMaskRegx();
+        $this->regex = EquipmentType::whereId($typeId)->firstOrFail()->sn_mask;
     }
 
     /**

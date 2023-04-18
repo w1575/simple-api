@@ -83,7 +83,7 @@ class EquipmentType extends Model
             };
         }
 
-        return $result. "$";
+        return $result . "$";
     }
 
     /**

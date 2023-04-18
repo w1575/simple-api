@@ -18,7 +18,7 @@ interface EquipmentTypeMaskInterface
 
     public static function getMaskAvailableValues(): array;
 
-    public static function validateMask(): bool;
+    public function validateMask(): bool;
 
     /**
      * @throws InvalidEquipmentTypeMaskValueException
