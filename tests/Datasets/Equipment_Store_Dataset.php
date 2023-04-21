@@ -9,7 +9,9 @@ dataset('equipment_store_dataset', function () {
 dataset('equipment_store_wrong_mask_dataset', function () {
     $wrongSnKey = function() {
         $definition = Equipment::factory()->definition();
+
         $currentValue = $definition['serial_number'];
+
         $definition['serial_number'] = str_replace(['@', '_', '-'], '', $currentValue);;
 
         return $definition;

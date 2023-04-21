@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\EquipmentTypeController;
+use App\Http\Middleware\PrepareRequestHeaderMiddleWare;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,11 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::get('/equipment', [EquipmentController::class, 'index'])->name('list');
-Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('view');
-Route::post('/equipment', [EquipmentController::class, 'store'])->name('store');
-Route::delete('/equipment/{id}', [EquipmentController::class, 'destroy'])->name('delete');
+Route::middleware([PrepareRequestHeaderMiddleWare::class])->group(function () {
+    Route::get('/equipment', [EquipmentController::class, 'index'])->name('list');
+    Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('view');
+    Route::post('/equipment', [EquipmentController::class, 'store'])->name('store');
+    Route::delete('/equipment/{id}', [EquipmentController::class, 'destroy'])->name('delete');
 
-Route::get('/equipment-type', [EquipmentTypeController::class, 'index'])->name('types-list');
+    Route::get('/equipment-type', [EquipmentTypeController::class, 'index'])->name('types-list');
+});

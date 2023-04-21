@@ -13,11 +13,13 @@ class SNMaskRule implements ValidationRule
 {
     protected string $regex;
 
-    public function __construct(int $typeId, protected EquipmentTypeMaskInterface $equipmentTypeMask)
+    public function __construct(mixed $typeId, protected EquipmentTypeMaskInterface $equipmentTypeMask)
     {
-        $model = EquipmentType::whereId($typeId)->firstOrFail();
-        $equipmentTypeMask->setMask($model->sn_mask);
-        $this->regex = $this->equipmentTypeMask->generateMaskRegulaExpression();
+        if ($typeId !== null) {
+            $model = EquipmentType::whereId($typeId)->firstOrFail();
+            $equipmentTypeMask->setMask($model->sn_mask);
+            $this->regex = $this->equipmentTypeMask->generateMaskRegulaExpression();
+        }
     }
 
     /**

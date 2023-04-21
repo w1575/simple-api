@@ -68,6 +68,7 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
         $maskAsArray = mb_str_split($this->mask);
 
         foreach ($maskAsArray as $letter) {
+
             $result .= $generateValue($letter);
         }
 

@@ -32,12 +32,11 @@ class StoreEquipmentRequest extends FormRequest
         return [
             'items' => ['required', 'array'],
             'items.*.equipment_type_id' =>  ['bail', 'required', Rule::exists($typeTable, 'id')],
-            'items.*.serial_number' => [Rule::forEach(function(null|string $value, string $attribute) {
-                    $equipmentTypeId = $this->input("items.$attribute.equipment_type_id");
-                    $snMaskRule = new SNMaskRule($equipmentTypeId, app(EquipmentTypeMaskInterface::class));
-                    return ['bail', $snMaskRule,'required',];
-                })
-            ],
+            'items.*.serial_number' => Rule::forEach(function(null|string $value, string $attribute) {
+                $equipmentTypeId = $this->input($attribute);
+                $snMaskRule = new SNMaskRule($equipmentTypeId, app(EquipmentTypeMaskInterface::class));
+                return ['bail', 'required', 'string', $snMaskRule];
+            }),
             'items.*.comment' => ['min:3', 'max:255'],
         ];
     }
