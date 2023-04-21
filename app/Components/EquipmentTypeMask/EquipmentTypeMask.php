@@ -2,6 +2,7 @@
 
 namespace App\Components\EquipmentTypeMask;
 
+use App\Components\EquipmentTypeMask\Exceptions\InvalidEquipmentTypeMaskValueException;
 use ReflectionClass;
 
 class EquipmentTypeMask implements EquipmentTypeMaskInterface
@@ -13,9 +14,19 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
         return (new ReflectionClass(static::class))->getConstants();
     }
 
-    public function validateMask(): bool
+    /**
+     * @throws InvalidEquipmentTypeMaskValueException
+     */
+    public function validateMask(): void
     {
-        // TODO: Implement validateMask() method.
+        $availableValues = static::getMaskAvailableValues();
+        $maskLength = strlen($this->mask);
+        for ($i = 0; $i < $maskLength; $i++) {
+            $item = $this->mask[$i];
+            if (!in_array($item, $availableValues)) {
+                throw new InvalidEquipmentTypeMaskValueException();
+            }
+        }
     }
 
     /**
@@ -33,7 +44,34 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
 
     public function generateSerialMask(): string
     {
+        $randomSymbol = function() {
+            $items = ['-', '_', '@'];
+            return $items[array_rand($items)];
+        };
 
+        $randomLetter = fn(string $first, string $last) => array_rand(range($first, $last));
+
+        $generateValue = fn(string $value) => match ($value) {
+            EquipmentTypeMaskInterface::MASK_DIGIT => rand(0, 9),
+            EquipmentTypeMaskInterface::MASK_UPPERCASE_LETTER => $randomLetter('A', 'Z'),
+            EquipmentTypeMaskInterface::MASK_LOWERCASE_LETTER => $randomLetter('a', 'z'),
+            EquipmentTypeMaskInterface::MASK_DIGIT_OR_LETTER => match(rand(0, 2)) {
+                0 => rand(0, 9),
+                1 => $randomLetter('a', 'z'),
+                2 => $randomLetter('A', 'Z'),
+            },
+            EquipmentTypeMaskInterface::MASK_SPECIAL_SYMBOL => $randomSymbol(),
+        };
+
+        $result = "";
+
+        $maskAsArray = mb_str_split($this->mask);
+
+        foreach ($maskAsArray as $letter) {
+            $result .= $generateValue($letter);
+        }
+
+        return $result;
     }
 
     public function generateMaskRegulaExpression(): string
@@ -44,7 +82,7 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
                 EquipmentTypeMaskInterface::MASK_DIGIT => "[0-9]",
                 EquipmentTypeMaskInterface::MASK_UPPERCASE_LETTER => "[A-Z]",
                 EquipmentTypeMaskInterface::MASK_LOWERCASE_LETTER => '[a-z]',
-                EquipmentTypeMaskInterface::MASK_DIGIT_OR_LETTER => "([0,9]|[A-Z])",
+                EquipmentTypeMaskInterface::MASK_DIGIT_OR_LETTER => "([0-9]|[A-Za-z])",
                 EquipmentTypeMaskInterface::MASK_SPECIAL_SYMBOL => "[\-,\_\@]",
             };
         }

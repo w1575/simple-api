@@ -20,7 +20,7 @@ it('can store data in database', function (array $definition) {
 })->with('equipment_store_dataset');
 
 it('cant store data with wrong sn_number in database', function (array $definition) {
-    dump($definition);
+
     $response = $this->post($this->apiRoute, $definition);
     $response->assertStatus(201);
     $response->assertJsonCount(1, 'items');

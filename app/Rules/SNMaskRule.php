@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
+use App\Components\EquipmentTypeMask\Exceptions\InvalidEquipmentTypeMaskValueException;
 use App\Models\EquipmentType;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -9,12 +11,13 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 class SNMaskRule implements ValidationRule
 {
-
     protected string $regex;
 
-    public function __construct(int $typeId, )
+    public function __construct(int $typeId, protected EquipmentTypeMaskInterface $equipmentTypeMask)
     {
-        $this->regex = EquipmentType::whereId($typeId)->firstOrFail()->sn_mask;
+        $model = EquipmentType::whereId($typeId)->firstOrFail();
+        $equipmentTypeMask->setMask($model->sn_mask);
+        $this->regex = $this->equipmentTypeMask->generateMaskRegulaExpression();
     }
 
     /**

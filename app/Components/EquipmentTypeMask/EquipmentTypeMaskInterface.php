@@ -2,8 +2,6 @@
 
 namespace App\Components\EquipmentTypeMask;
 
-use App\Components\EquipmentTypeMask\Exceptions\InvalidEquipmentTypeMaskValueException;
-
 interface EquipmentTypeMaskInterface
 {
     public const MASK_DIGIT = 'N';
@@ -18,10 +16,9 @@ interface EquipmentTypeMaskInterface
 
     public static function getMaskAvailableValues(): array;
 
-    public function validateMask(): bool;
+    public function validateMask(): void;
 
     /**
-     * @throws InvalidEquipmentTypeMaskValueException
      * @param string $mask
      * @return void
      */
