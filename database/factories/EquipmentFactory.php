@@ -23,6 +23,7 @@ class EquipmentFactory extends Factory
             'equipment_type_id' => null,
             'serial_number' => $this->faker->unique()->word, // все равно нужно сгенерировать на основе типа
             'comment' => $this->faker->text(64),
+            'deleted_at' => null,
         ];
     }
 }

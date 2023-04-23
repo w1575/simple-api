@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('serial_number');
             $table->string('comment');
             $table->unique(['equipment_type_id', 'serial_number']);
+            $table->softDeletes();
         });
     }
 

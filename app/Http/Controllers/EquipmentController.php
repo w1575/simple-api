@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Equipment\IndexAction;
+use App\Contracts\Api\Equipment\DeleteContractInterface;
 use App\Contracts\Api\Equipment\IndexContractInterface;
 use App\Contracts\Api\Equipment\StoreContractInterface;
+use App\Data\Equipment\DeleteData;
 use App\Data\Equipment\IndexData;
 use App\Data\Equipment\StoreData;
 use App\Http\Requests\Equipment\StoreEquipmentRequest;
 use App\Http\Requests\Equipment\UpdateEquipmentRequest;
 use App\Models\Equipment;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class EquipmentController extends Controller
 {
@@ -71,8 +71,10 @@ class EquipmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Equipment $equipment)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $action = app(DeleteContractInterface::class);
+        $data = new DeleteData($id);
+        return $action($data);
     }
 }

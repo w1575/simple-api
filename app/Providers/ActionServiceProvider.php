@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Actions\Equipment\DeleteAction;
 use App\Actions\Equipment\StoreAction;
 use App\Actions\EquipmentType\IndexAction as EquipmentTypeIndex;
+use App\Contracts\Api\Equipment\DeleteContractInterface;
 use App\Contracts\Api\Equipment\IndexContractInterface;
 use App\Contracts\Api\Equipment\StoreContractInterface;
 use App\Contracts\Api\EquipmentType\IndexContractInterface as EquipmentTypeIndexContractInterface;
@@ -17,6 +19,7 @@ class ActionServiceProvider extends ServiceProvider
         EquipmentTypeIndexContractInterface::class => EquipmentTypeIndex::class,
         IndexContractInterface::class => EquipmentIndexAction::class,
         StoreContractInterface::class => StoreAction::class,
+        DeleteContractInterface::class => DeleteAction::class,
     ];
 
     /**
