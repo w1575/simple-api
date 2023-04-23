@@ -14,6 +14,8 @@ interface EquipmentTypeMaskInterface
 
     public const MASK_SPECIAL_SYMBOL = "Z";
 
+    public const REGEXP_DELIMITER = "%";
+
     public static function getMaskAvailableValues(): array;
 
     public function validateMask(): void;

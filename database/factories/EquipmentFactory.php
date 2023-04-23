@@ -23,6 +23,7 @@ class EquipmentFactory extends Factory
 
         /** @var EquipmentTypeMaskInterface $maskComponent */
         $maskComponent = app(EquipmentTypeMaskInterface::class);
+
         $maskComponent->setMask($type->sn_mask);
         return [
             'equipment_type_id' => $type->id,

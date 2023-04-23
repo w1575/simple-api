@@ -32,9 +32,11 @@ class StoreEquipmentRequest extends FormRequest
         return [
             'items' => ['required', 'array'],
             'items.*.equipment_type_id' =>  ['bail', 'required', Rule::exists($typeTable, 'id')],
-            'items.*.serial_number' => Rule::forEach(function(null|string $value, string $attribute) {
-                $equipmentTypeId = $this->input($attribute);
-                $snMaskRule = new SNMaskRule($equipmentTypeId, app(EquipmentTypeMaskInterface::class));
+            'items.*.serial_number' => Rule::forEach(function(null|string $equipmentTypeIdAttributeValue, string $attribute) {
+                $equipmentTypeIdAttribute = str_replace('serial_number', 'equipment_type_id', $attribute);
+                // небольшой велосипед. думаю в ларе должен быть способ получения сиблинга
+                $equipmentTypeIdAttributeValue = $this->input($equipmentTypeIdAttribute);
+                $snMaskRule = new SNMaskRule($equipmentTypeIdAttributeValue, app(EquipmentTypeMaskInterface::class));
                 return ['bail', 'required', 'string', $snMaskRule];
             }),
             'items.*.comment' => ['min:3', 'max:255'],

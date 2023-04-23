@@ -3,20 +3,21 @@
 namespace App\Rules;
 
 use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
-use App\Components\EquipmentTypeMask\Exceptions\InvalidEquipmentTypeMaskValueException;
 use App\Models\EquipmentType;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Translation\PotentiallyTranslatedString;
 
 class SNMaskRule implements ValidationRule
 {
-    protected string $regex;
+    protected ?string $regex = null;
 
-    public function __construct(mixed $typeId, protected EquipmentTypeMaskInterface $equipmentTypeMask)
+    public function __construct(?string $typeId, protected EquipmentTypeMaskInterface $equipmentTypeMask)
     {
         if ($typeId !== null) {
-            $model = EquipmentType::whereId($typeId)->firstOrFail();
+            $model = EquipmentType::whereId($typeId)->first();
+            if ($model === null) {
+                return;
+            }
             $equipmentTypeMask->setMask($model->sn_mask);
             $this->regex = $this->equipmentTypeMask->generateMaskRegulaExpression();
         }
@@ -31,7 +32,7 @@ class SNMaskRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match($this->regex, $value)) {
+        if ($this->regex !== null && !preg_match($this->regex, $value)) {
             $fail("{$attribute} has wrong serial number pattern");
         }
     }
