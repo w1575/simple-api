@@ -20,6 +20,7 @@ use Illuminate\Support\InteractsWithTime;
  * @property int $equipment_type_id
  * @property string $serial_number
  * @property string $comment
+ * @property EquipmentType $equipmentType
  * @method static EquipmentFactory factory($count = null, $state = [])
  * @method static Builder|Equipment newModelQuery()
  * @method static Builder|Equipment newQuery()

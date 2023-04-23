@@ -19,15 +19,9 @@ class EquipmentFactory extends Factory
      */
     public function definition(): array
     {
-        $type = EquipmentType::firstOrFail();
-
-        /** @var EquipmentTypeMaskInterface $maskComponent */
-        $maskComponent = app(EquipmentTypeMaskInterface::class);
-
-        $maskComponent->setMask($type->sn_mask);
         return [
-            'equipment_type_id' => $type->id,
-            'serial_number' => $maskComponent->generateSerialMask(),
+            'equipment_type_id' => null,
+            'serial_number' => $this->faker->unique()->word, // все равно нужно сгенерировать на основе типа
             'comment' => $this->faker->text(64),
         ];
     }

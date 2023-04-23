@@ -28,8 +28,10 @@ interface EquipmentTypeMaskInterface
 
     public function getMask(): string;
 
-    public function generateSerialMask(): string;
+    public function generateSerialNumber(): string;
 
     public function generateMaskRegulaExpression(): string;
+
+    public static function generateMask(int $count): string;
 
 }

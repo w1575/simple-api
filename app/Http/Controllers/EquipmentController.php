@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Equipment\IndexAction;
+use App\Contracts\Api\Equipment\IndexContractInterface;
 use App\Contracts\Api\Equipment\StoreContractInterface;
+use App\Data\Equipment\IndexData;
 use App\Data\Equipment\StoreData;
 use App\Http\Requests\Equipment\StoreEquipmentRequest;
 use App\Http\Requests\Equipment\UpdateEquipmentRequest;
@@ -17,7 +20,10 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-
+        $action = app(IndexContractInterface::class);
+        $params = [];
+        $indexData = IndexData::from($params);
+        return $action($indexData);
     }
 
     /**

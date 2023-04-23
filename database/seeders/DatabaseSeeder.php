@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(EquipmentTypeSeeder::class);
+        $this->callWith(EquipmentTypeSeeder::class);
+        $this->callWith(EquipmentSeeder::class, ['count' => 25]);
     }
 }

@@ -11,7 +11,9 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
 
     public static function getMaskAvailableValues(): array
     {
-        return (new ReflectionClass(static::class))->getConstants();
+        $constants = (new ReflectionClass(static::class))->getConstants();
+        unset($constants['REGEXP_DELIMITER']);
+        return $constants;
     }
 
     /**
@@ -42,7 +44,7 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
         return $this->mask;
     }
 
-    public function generateSerialMask(): string
+    public function generateSerialNumber(): string
     {
         $randomSymbol = function() {
             $items = ['-', '_', '@'];
@@ -72,6 +74,7 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
         $result = "";
 
         $maskAsArray = mb_str_split($this->mask);
+
         foreach ($maskAsArray as $letter) {
             $symbol = $generateValue($letter);
             $result .= $symbol;
@@ -94,5 +97,17 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
         }
 
         return $result . "$" . static::REGEXP_DELIMITER;
+    }
+
+    public static function generateMask(int $count = 5): string
+    {
+        $availableValues = static::getMaskAvailableValues();
+        $mask = "";
+        for ($i = 0; $i < $count; $i++) {
+            $randomIndex = array_rand($availableValues);
+            $maskValue = $availableValues[$randomIndex];
+            $mask .= $maskValue;
+        }
+        return $mask;
     }
 }
