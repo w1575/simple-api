@@ -31,7 +31,7 @@ class EquipmentTypeSeeder extends Seeder
             ],
             [
                 'type' => 'D-Link DIR-156 E',
-                'sn_mask' => 'ZXXAAAAAXAA',
+                'sn_mask' => 'ZXXAAAAAXA',
             ],
             // Где:
             //  N – цифра от 0 до 9;

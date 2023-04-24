@@ -55,15 +55,15 @@ class EquipmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Equipment $equipment)
+    public function edit(int  $equipment)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEquipmentRequest $request, Equipment $equipment)
+    public function update(UpdateEquipmentRequest $request, int $id)
     {
         //
     }

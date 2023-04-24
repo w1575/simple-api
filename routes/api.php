@@ -25,6 +25,7 @@ Route::middleware([PrepareRequestHeaderMiddleWare::class])->group(function () {
     Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('view');
     Route::post('/equipment', [EquipmentController::class, 'store'])->name('store');
     Route::delete('/equipment/{id}', [EquipmentController::class, 'destroy'])->name('delete');
+    Route::put('/equipment/{id}', [EquipmentController::class, 'update'])->name('update');
 
     Route::get('/equipment-type', [EquipmentTypeController::class, 'index'])->name('types-list');
 });

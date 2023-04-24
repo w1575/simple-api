@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
 use App\Models\Equipment;
 use App\Models\EquipmentType;
-use Database\Factories\EquipmentTypeFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EquipmentSeeder extends Seeder

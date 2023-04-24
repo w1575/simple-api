@@ -9,4 +9,6 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     public string $route;
+
+    public string $routeName;
 }

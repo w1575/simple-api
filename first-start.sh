@@ -10,5 +10,5 @@ SAIL='./vendor/bin/sail'
 echo $SAIL
 $SAIL up -d --build
 
-$SAIL artisan migrate
+$SAIL artisan migrate:fresh --seed
 $SAIL artisan test
