@@ -36,6 +36,8 @@ class StoreAction implements StoreContractInterface
                 $items[] = $itemResponse;
             }
         }
+        $test = app(StoreResponseData::class, $data->toArray());
+        dd($test);
         $responseData = StoreResponseData::from(['items' => $items]);
         return $responseData->toResponse($this->request);
     }
