@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,8 @@ class EquipmentTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'sn_number' => $this->sn_mask,
+            'sn_mask' => $this->sn_mask,
+            'example_number' => app(EquipmentTypeMaskInterface::class)->setMask($this->sn_mask)->generateSerialNumber()
         ];
     }
 }

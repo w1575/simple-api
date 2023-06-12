@@ -23,7 +23,7 @@ class EquipmentTypeSeeder extends Seeder
             ],
             [
                 'type' => 'TP-Link DD-RR74',
-                'sn_mask' => 'AAANNNxZZ',
+                'sn_mask' => 'AAANNNXZZ',
             ],
             [
                 'type' => 'D-Link DIR-300 E',

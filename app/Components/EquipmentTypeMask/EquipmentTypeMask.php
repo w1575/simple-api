@@ -69,6 +69,7 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
                     2 => $randomLetter('A', 'Z'),
                 },
                 EquipmentTypeMaskInterface::MASK_SPECIAL_SYMBOL => $randomSymbol(),
+                default => dd($value),
             };
         ;
 
