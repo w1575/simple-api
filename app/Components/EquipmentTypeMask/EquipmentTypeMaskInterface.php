@@ -24,7 +24,7 @@ interface EquipmentTypeMaskInterface
      * @param string $mask
      * @return void
      */
-    public function setMask(string $mask): void;
+    public function setMask(string $mask): static;
 
     public function getMask(): string;
 

@@ -19,9 +19,11 @@ class EquipmentFactory extends Factory
      */
     public function definition(): array
     {
+        $type = EquipmentType::factory()->create();
+        $serialNumber = app(EquipmentTypeMaskInterface::class)->setMask($type->sn_mask)->generateSerialNumber();
         return [
-            'equipment_type_id' => null,
-            'serial_number' => $this->faker->unique()->word, // все равно нужно сгенерировать на основе типа
+            'equipment_type_id' => $type->id,
+            'serial_number' => $serialNumber,
             'comment' => $this->faker->text(64),
             'deleted_at' => null,
         ];

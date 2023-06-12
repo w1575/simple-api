@@ -3,9 +3,9 @@
 namespace App\Contracts\Api\Equipment;
 
 use App\Data\Equipment\EditData;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 interface EditContractInterface
 {
-    public function __invoke(EditData $data): JsonResponse;
+    public function __invoke(EditData $data): JsonResource;
 }

@@ -34,9 +34,10 @@ class EquipmentTypeMask implements EquipmentTypeMaskInterface
     /**
      * @inheritDoc
      */
-    public function setMask(string $mask): void
+    public function setMask(string $mask): static
     {
         $this->mask = $mask;
+        return $this;
     }
 
     public function getMask(): string
