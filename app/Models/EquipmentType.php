@@ -31,9 +31,11 @@ use ReflectionClass;
  * @method static Builder|EquipmentType whereType($value)
  * @method static Builder|EquipmentType whereUpdatedAt($value)
  * @method static Builder filter(EquipmentTypeFilterInterface $filters)
+ * @method static \Database\Factories\EquipmentTypeFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class EquipmentType extends Model
 {
-    use HasFactory, FilterableTrait;
+    use FilterableTrait;
+    use HasFactory;
 }

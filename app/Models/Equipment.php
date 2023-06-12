@@ -33,10 +33,18 @@ use Illuminate\Support\InteractsWithTime;
  * @method static Builder|Equipment whereSerialNumber($value)
  * @method static Builder|Equipment whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property Carbon|null $deleted_at
+ * @method static Builder|Equipment onlyTrashed()
+ * @method static Builder|Equipment whereDeletedAt($value)
+ * @method static Builder|Equipment withTrashed()
+ * @method static Builder|Equipment withoutTrashed()
+ * @mixin \Eloquent
  */
 class Equipment extends Model
 {
-    use HasFactory, InteractsWithTime, SoftDeletes;
+    use HasFactory;
+    use InteractsWithTime;
+    use SoftDeletes;
 
     protected $guarded = [
         'created_at',
@@ -44,10 +52,10 @@ class Equipment extends Model
         'id',
     ];
 
-    protected $table = "equipments";
+    protected $table = "equipments"; // TODO: fix this and fix this in migration
 
     public function equipmentType(): BelongsTo
     {
-        return $this->belongsTo(EquipmentType::class);
+        return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
     }
 }

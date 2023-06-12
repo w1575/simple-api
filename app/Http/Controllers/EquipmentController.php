@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Api\Equipment\DeleteContractInterface;
+use App\Contracts\Api\Equipment\EditContractInterface;
 use App\Contracts\Api\Equipment\IndexContractInterface;
 use App\Contracts\Api\Equipment\StoreContractInterface;
 use App\Data\Equipment\DeleteData;
+use App\Data\Equipment\EditData;
 use App\Data\Equipment\IndexData;
 use App\Data\Equipment\StoreData;
 use App\Http\Requests\Equipment\StoreEquipmentRequest;
@@ -65,7 +67,10 @@ class EquipmentController extends Controller
      */
     public function update(UpdateEquipmentRequest $request, int $id)
     {
-        //
+        $data = EditData::from($request);
+        $data->id = $id;
+        $action = app(EditContractInterface::class);
+        return $action($data);
     }
 
     /**

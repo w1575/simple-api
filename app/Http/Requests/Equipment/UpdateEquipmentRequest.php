@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests\Equipment;
 
+use App\Components\EquipmentTypeMask\EquipmentTypeMaskInterface;
+use App\Models\EquipmentType;
+use App\Rules\SNMaskRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEquipmentRequest extends FormRequest
 {
@@ -21,8 +25,11 @@ class UpdateEquipmentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $typeTable = (new EquipmentType())->getTable();
         return [
-            //
+            'equipment_type_id' =>  ['bail', 'required', Rule::exists($typeTable, 'id')],
+            'serial_number' => ['bail', 'required', 'string', new SNMaskRule($this->get('equipment_type_id'), app(EquipmentTypeMaskInterface::class))],
+            'comment' => ['min:3', 'max:255'],
         ];
     }
 }

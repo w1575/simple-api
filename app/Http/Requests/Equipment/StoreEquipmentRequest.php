@@ -27,7 +27,7 @@ class StoreEquipmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        $typeTable = (new EquipmentType)->getTable();
+        $typeTable = (new EquipmentType())->getTable();
 
         return [
             'items' => ['required', 'array'],
